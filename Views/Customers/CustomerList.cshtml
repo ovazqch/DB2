@@ -1,0 +1,58 @@
+﻿@model List<DBProgramming_Class_2.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+}
+
+<link rel="stylesheet" href="~/Content/main.css" />
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>List of Customers</h2>
+    </div>
+</div>
+
+@using (Html.BeginForm("CustomerList", "Customers", FormMethod.Get))
+{
+    <div classs="row">
+        <div class="col-md-4">
+            <input type="text" placeholder="Search..." name="searchTerm" id="searchTerm" />
+            <input type="submit" value="Submit" />
+        </div>
+        <div class="col-md-4" id="addCustomerBtn">
+            @Html.ActionLink("Add New Customer", "AddCustomer", "Customers", new { id = 0 },null)
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table id="products" class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Customer Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Edit Customer</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in Model)
+                {
+                    <tr>
+                        <th scope="row">@customer.CustomerID</th>
+                        <td>@customer.Name</td>
+                        <td>@customer.Address</td>
+                        <td>@customer.City</td>
+                        <td>@customer.State</td>
+                        <td>
+                            @Html.ActionLink("Edit", "AddCustomer", "Customers", new { id = customer.CustomerID }, new { @class = "edit" }) |
+                            @Html.ActionLink("Delete", "Delete", "Customers", new { id = customer.CustomerID}, new { @class = "delete" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

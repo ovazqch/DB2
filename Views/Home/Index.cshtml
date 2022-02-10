@@ -1,0 +1,53 @@
+﻿@model List<DBProgramming_Class_2.Models.Product>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<link rel="stylesheet" href="~/Content/main.css" />
+<script type="text/javascript" src="~/Content/main.js"></script>
+
+<div class="jumbotron">
+    <h2>Our Class Book Store</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h4>List of Books</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table id="products" class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Product Code</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col"># of Invoices</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <th scope="row">@product.ProductCode</th>
+                        <td>@product.Description</td>
+                        <td>@product.UnitPrice</td>
+                        <td>@product.InvoiceLineItems.Count()</td>
+                        <td>
+                            @if (product.InvoiceLineItems.Count() == 0)
+                            {
+                                <span>No Invoices</span>
+                            }
+                            else
+                            {
+                                <a href="/Invoices/Index/@product.ProductCode">Display All Invoices</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

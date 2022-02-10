@@ -1,0 +1,54 @@
+﻿@*The model we're getting from the back end, and sending to the backend*@
+@model DBProgramming_Class_2.Models.Customer
+
+@*<form method="post" target="_self" action="/Customers/AddCustomer">
+    </form>*@
+
+
+@*Tag to create a form*@
+@using (Html.BeginForm("AddCustomer", "Customers", FormMethod.Post))
+{
+    @Html.HiddenFor(c => c.CustomerID)
+    @Html.HiddenFor(c => c.State1)
+
+<div class="container-fluid">
+    <div>
+        <h2>Add / Edit Customer</h2>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+            @Html.TextBoxFor(c => c.Name, new { @class = "form-control", @placeholder = "Name..." })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            @Html.TextBoxFor(c => c.Address, new { @class = "form-control", @placeholder = "Address..." })
+        </div>
+        <div class="col-md-6">
+            @Html.TextBoxFor(c => c.City, new { @class = "form-control", @placeholder = "City..." })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            @Html.TextBoxFor(c => c.State, new { @class = "form-control", @placeholder = "State..." })
+        </div>
+        <div class="col-md-6">
+            @Html.TextBoxFor(c => c.ZipCode, new { @class = "form-control", @placeholder = "ZipCode..." })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            @*A submit button inside a form will ALWAYS submits the form*@
+            <input type="submit" value="Submit" />
+        </div>
+        <div class="col-md-6">
+            @Html.ActionLink("Retrun to List", "CustomerList", "Customers", new { id = 0 }, new { @class = "return" })
+        </div>
+    </div>
+</div>
+
+}

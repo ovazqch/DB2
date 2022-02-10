@@ -1,0 +1,27 @@
+﻿@model DBProgramming_Class_2.Models.Invoice
+
+@{
+    ViewBag.Title = "CreateInvoice";
+}
+
+<h2>Create Invoice</h2>
+
+@using (Html.BeginForm("EditInvoice", "Invoices", FormMethod.Post))
+{
+    <h2>Edit Invoice Item</h2>
+
+    @Html.HiddenFor(x => x.InvoiceID)
+    @Html.HiddenFor(x => x.ProductTotal, new { @Value = 0 })
+    @Html.HiddenFor(x => x.SalesTax, new { @Value = 0 })
+    @Html.HiddenFor(x => x.Shipping, new { @Value = 0 })
+    @Html.HiddenFor(x => x.InvoiceTotal, new { @Value = 0 })
+
+    <label>Customer ID</label>
+    <label> @Html.TextBoxFor(x => x.CustomerID, new { @class = "form-control" }) </label>
+    <br />
+
+    <label>Invoice Date</label>
+    <label> @Html.TextBoxFor(x => x.InvoiceDate, "{0:d}", new { @class = "form-control datepicker" }) </label>
+    <br />
+    <input type="submit" value="Submit" />
+}

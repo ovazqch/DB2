@@ -1,0 +1,86 @@
+﻿@model DBProgramming_Class_2.Models.CombinedInvoice
+@{
+    ViewBag.Title = "View Invoice Details";
+}
+
+<h2>View Invoice Details</h2>
+@using (Html.BeginForm("ViewInvoiceDetails", "Invoices", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <table id="invoices" class="table table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Invoice ID</th>
+                        <th scope="col">Customer ID</th>
+                        <th scope="col">Invoice Date</th>
+                        <th scope="col">Product Total</th>
+                        <th scope="col">Sales Tax</th>
+                        <th scope="col">Shipping</th>
+                        <th scope="col">Invoice Total</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var invoice in Model.Invoices)
+                    {
+                        <tr>
+                            <th scope="row">@invoice.InvoiceID</th>
+                            <td>@invoice.Customer.Name</td>
+                            <td>
+                                @invoice.InvoiceDate.ToShortDateString()
+                            </td>
+                            <td>@Math.Round(invoice.ProductTotal, 2)$</td>
+                            <td>@Math.Round(invoice.SalesTax, 2)$</td>
+                            <td>@Math.Round(invoice.Shipping, 2)$</td>
+                            <td>@Math.Round(invoice.InvoiceTotal, 2)$</td>
+                            <td>
+                                @Html.ActionLink("Delete", "DeleteInvoice", "Invoices", new { id = invoice.InvoiceID }, new { @class = "delete" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <table id="invoiceDetails" class="table table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">InvoiceID</th>
+                        <th scope="col">Product Code</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Unit Price</th>
+                        <th scope="col">Item Total</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var invoiceLineItem in Model.InvoiceLineItems)
+                    {
+                        <tr>
+                            <th scope="row" id="InvoiceID">
+                                @invoiceLineItem.InvoiceID
+                            </th>
+                            <td id="ProductCode">@invoiceLineItem.ProductCode</td>
+                            <td>
+                                @invoiceLineItem.Quantity
+                            </td>
+                            <td>@Math.Round(invoiceLineItem.UnitPrice, 2)$</td>
+                            <td>@Math.Round(invoiceLineItem.ItemTotal, 2)$</td>
+                            <td>
+                                @Html.ActionLink("Edit", "ItemDetails", "Invoices", new { InvoiceId = invoiceLineItem.InvoiceID, ProductCode = invoiceLineItem.ProductCode }, new { @class = "edit" }) |
+                                @Html.ActionLink("Delete", "DeleteInvoiceItem", "Invoices", new { InvoiceId = invoiceLineItem.InvoiceID, ProductCode = invoiceLineItem.ProductCode }, new { @class = "delete" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @foreach (var invoice in Model.Invoices)
+            {
+                <div>
+                    @Html.ActionLink("Add Invoce Item", "ItemDetails", "Invoices", new { InvoiceId = invoice.InvoiceID, ProductCode = 0 }, new { @class = "edit" })
+                </div>
+            }
+        </div>
+    </div>
+}
+

@@ -1,0 +1,24 @@
+﻿@model DBProgramming_Class_2.Models.InvoiceLineItem
+@{
+    ViewBag.Title = "Add / Edit Invoice Item";
+}
+
+
+<h2>Edit Invoice Item</h2>
+@Html.HiddenFor(x => x.ItemTotal)
+
+<label>Invoice Id</label>
+<label> @Html.LabelFor(x => x.InvoiceID) </label>
+<br/>
+
+<label>Product Code</label>
+<label> @Html.TextBoxFor(x => x.ProductCode) </label>
+<br />
+
+<label>Product Quantity</label>
+<label> @Html.TextBoxFor(x => x.Quantity) </label>
+<br />
+
+<label>Product Unit Price</label>
+<label> @Html.LabelFor(x => x.UnitPrice) </label>
+<br />

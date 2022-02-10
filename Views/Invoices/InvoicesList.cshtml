@@ -1,0 +1,65 @@
+﻿@model List<DBProgramming_Class_2.Models.Invoice>
+@{
+    ViewBag.Title = "InvoicesList";
+}
+
+<link rel="stylesheet" href="~/Content/main.css" />
+<script type="text/javascript" src="~/Content/main.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <h4>List of Invoices</h4>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="col-md-4" id="addInvoice">
+        @Html.ActionLink("Add New Invoice", "CreateInvoice", "Invoices")
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table id="products" class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Shipping</th>
+                    <th scope="col">Tax</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var invoice in Model)
+                {
+                    <tr>
+                        <th scope="row">
+                            <a href="/Invoices/ViewInvoiceDetails/@invoice.InvoiceID">
+                                @invoice.InvoiceID
+                            </a>
+                        </th>
+                        <td>@invoice.InvoiceDate.ToShortDateString()</td>
+                        <td>
+                            <a href="/Customers/Index/@invoice.CustomerID">
+                                @invoice.Customer.Name
+                            </a>
+                        </td>
+                        <td>@Math.Round(invoice.ProductTotal, 2)$</td>
+                        <td>@Math.Round(invoice.Shipping, 2)$</td>
+                        <td>@Math.Round(invoice.SalesTax, 2)$</td>
+                        <td>@Math.Round(invoice.InvoiceTotal, 2)$</td>
+                        <td>
+                            <a href="/Invoices/ViewInvoiceDetails/@invoice.InvoiceID">
+                                Edit |
+                            </a>
+                            @Html.ActionLink("Delete", "DeleteInvoice", "Invoices", new { id = invoice.InvoiceID }, new { @class = "delete" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
