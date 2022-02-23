@@ -32,29 +32,6 @@ namespace DBProgramming_Class_2.Controllers
             return View(invoices);
         }
 
-        //public ActionResult AddInvoice(int id)
-        //{
-        //    var context = new BooksEntities();
-
-        //    InvoiceLineItem invoiceLineItem = context.InvoiceLineItems.FirstOrDefault(x => x.InvoiceID == id);
-
-        //    if (invoiceLineItem == null)
-        //    {
-        //        invoiceLineItem = new InvoiceLineItem();
-        //    }
-
-        //    List<Product> products = context.Products.ToList();
-        //    List<InvoiceLineItem> invoiceLineItems = context.InvoiceLineItems.ToList();
-        //    List<Customer> customers = context.Customers.ToList();
-
-        //    AllDataList allDataList = new AllDataList() {
-        //        productsList = products,
-        //        invoiceLineItemsList = invoiceLineItems,
-        //        customersList = customers
-        //    };
-        //    return View(invoiceLineItems);
-        //}
-
         public ActionResult ViewInvoiceDetails(int id)
         {
             var context = new BooksEntities();
@@ -76,24 +53,29 @@ namespace DBProgramming_Class_2.Controllers
                 {
                     newProductTotal += item.ItemTotal;
                 }
-                decimal salesTax = Convert.ToDecimal(0.0750);
+
+                decimal salesTax = context.OrderOptions.Select(x => x.SalesTaxRate).SingleOrDefault();
+
                 decimal newSalesTax = newProductTotal * salesTax;
 
+                decimal baseShipping = context.OrderOptions.Select(x => x.FirstBookShipCharge).SingleOrDefault();
+                decimal additionalBookShipping = context.OrderOptions.Select(x => x.AdditionalBookShipCharge).SingleOrDefault();
                 decimal newShippingCost = 0;
                 int countItems = 0;
+
                 foreach (InvoiceLineItem item in invoiceDisplayDetail)
                 {
                     countItems += item.Quantity;
                 }
                 if (countItems == 1)
                 {
-                    newShippingCost = Convert.ToDecimal(3.7500);
+                    newShippingCost = baseShipping;
                 }
                 if (countItems > 1)
                 {
                     int count = countItems - 1;
-                    decimal additionalItems = Convert.ToDecimal(1.2500) * Convert.ToDecimal(count);
-                    newShippingCost = Convert.ToDecimal(3.7500) + additionalItems;
+                    decimal additionalItems = additionalBookShipping * Convert.ToDecimal(count);
+                    newShippingCost = baseShipping + additionalItems;
                 }
 
                 updateInvoice.ProductTotal = newProductTotal;
@@ -110,7 +92,6 @@ namespace DBProgramming_Class_2.Controllers
 
                 combinedInvoice.Invoices = invoiceDisplayUpdated;
                 combinedInvoice.InvoiceLineItems = invoiceDisplayDetail;
-                combinedInvoice.Customer = customer;
             }
             else
             {
@@ -118,7 +99,6 @@ namespace DBProgramming_Class_2.Controllers
                 List<InvoiceLineItem> invoiceLineItems = context.InvoiceLineItems.Where(x => x.InvoiceID == id).ToList();
                 combinedInvoice.Invoices = invoices;
                 combinedInvoice.InvoiceLineItems = invoiceLineItems;
-
             }
             return View(combinedInvoice);
         }
@@ -139,12 +119,8 @@ namespace DBProgramming_Class_2.Controllers
         {
             var context = new BooksEntities();
 
-            decimal newPrice = Convert.ToDecimal(context.Products.Where(x => x.ProductCode == obj.ProductCode).Select(x => x.UnitPrice));
-
-            obj.UnitPrice = newPrice;
-
+            obj.UnitPrice = context.Products.Where(x => x.ProductCode == obj.ProductCode).Select(x => x.UnitPrice).SingleOrDefault();
             obj.ItemTotal = obj.Quantity * obj.UnitPrice;
-
 
             try
             {
@@ -182,6 +158,16 @@ namespace DBProgramming_Class_2.Controllers
             string code = obj.ProductCode;
 
             var context = new BooksEntities();
+            var productList = context.Products.ToList();
+            ViewBag.prodList = productList;
+
+            var productCount = new List<int>();
+            for (int i = 1; i <= 10; i++)
+            {
+                productCount.Add(i);
+            }
+            ViewBag.prodCount = productCount;    
+
             InvoiceLineItem item = context.InvoiceLineItems.FirstOrDefault(x => (x.InvoiceID == id) && (x.ProductCode == code));
 
             return View(item);
@@ -191,10 +177,12 @@ namespace DBProgramming_Class_2.Controllers
         public ActionResult CreateInvoice()
         {
             var context = new BooksEntities();
+            var customerList = context.Customers.ToList();
+            ViewBag.custList = customerList;
 
             Invoice newInvoice = new Invoice();
 
-            return View(newInvoice);
+            return PartialView(newInvoice);
         }
 
         public ActionResult EditInvoice(Invoice inv)

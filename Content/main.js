@@ -1,16 +1,22 @@
-﻿function itemDetails(prodCode, ) {
-    var invoiceId = document.getElementById('InvoiceID').value;
-    var prodCode = document.getElementById('ProductCode').value;
-
-    debugger;
-    var lineItemEdit = {
-        InvoiceID: invoiceId,
-        ProductCode: prodCode
-    }
-
-    $.get('/Invoices/ItemDetails/' + lineItemEdit, function (data) {
-        $('#exampleModal').modal('show');
-        $(".modal-body").html(data);
+﻿
+function newInvoice() {
+    $.get('/Invoices/CreateInvoice/', function (data) {
+        $('#modalInvoicesList').modal('show');
+        $(".modal-bodyInvoicesList").html(data);
     });
-    
 }
+
+function newProduct() {
+    $.get('/Home/CreateProduct/', function (data) {
+        $('#modalCreateProduct').modal('show');
+        $(".modal-bodyNewProduct").html(data);
+    });
+}
+
+function editProduct(id) {
+    $.get('/Home/EditProduct/'+ id, function (data) {
+        $('#modalEditProduct').modal('show');
+        $(".modal-EditProduct").html(data);
+    });
+}
+

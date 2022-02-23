@@ -8,8 +8,7 @@
 
 @using (Html.BeginForm("EditInvoice", "Invoices", FormMethod.Post))
 {
-    <h2>Edit Invoice Item</h2>
-
+   
     @Html.HiddenFor(x => x.InvoiceID)
     @Html.HiddenFor(x => x.ProductTotal, new { @Value = 0 })
     @Html.HiddenFor(x => x.SalesTax, new { @Value = 0 })
@@ -17,11 +16,12 @@
     @Html.HiddenFor(x => x.InvoiceTotal, new { @Value = 0 })
 
     <label>Customer ID</label>
-    <label> @Html.TextBoxFor(x => x.CustomerID, new { @class = "form-control" }) </label>
+    <label>@Html.DropDownListFor(x=>x.CustomerID, new SelectList(ViewBag.custList, "CustomerID", "Name"))</label>
     <br />
 
     <label>Invoice Date</label>
-    <label> @Html.TextBoxFor(x => x.InvoiceDate, "{0:d}", new { @class = "form-control datepicker" }) </label>
+    <label> @Html.TextBoxFor(x => x.InvoiceDate, "{0:d}", new { @class = "form-control", type="date" }) </label>
     <br />
     <input type="submit" value="Submit" />
 }
+

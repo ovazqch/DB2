@@ -3,7 +3,6 @@
     ViewBag.Title = "Home Page";
 }
 
-<link rel="stylesheet" href="~/Content/main.css" />
 <script type="text/javascript" src="~/Content/main.js"></script>
 
 <div class="jumbotron">
@@ -15,6 +14,9 @@
         <h4>List of Books</h4>
     </div>
 </div>
+<div>
+    <a onclick="newProduct();">Add new Product</a>
+</div>
 <div class="row">
     <div class="col-md-12">
         <table id="products" class="table table-dark">
@@ -24,6 +26,7 @@
                     <th scope="col">Description</th>
                     <th scope="col">Price</th>
                     <th scope="col"># of Invoices</th>
+                    <th scope="col">Display Invoices</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -45,9 +48,34 @@
                                 <a href="/Invoices/Index/@product.ProductCode">Display All Invoices</a>
                             }
                         </td>
+                        <td>
+                            <a onclick="editProduct('@product.ProductCode');">Edit </a>|
+                            @Html.ActionLink("Delete", "DeleteProduct", "Home", new { ProductCode = product.ProductCode }, new { @class = "delete" })
+                           
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCreateProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Add New Product</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">
+                <div class="modal-bodyNewProduct"></div>
+            </div><div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEditProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Edit Product</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">
+                <div class="modal-EditProduct"></div>
+            </div><div class="modal-footer"></div>
+        </div>
     </div>
 </div>

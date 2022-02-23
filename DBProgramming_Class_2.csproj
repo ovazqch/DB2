@@ -247,6 +247,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AllDataList.cs" />
+    <Compile Include="Models\ProdDelete.cs" />
+    <Compile Include="Models\LineItemPlusProdList.cs" />
     <Compile Include="Models\LineItem.cs" />
     <Compile Include="Models\CombinedInvoice.cs" />
     <Compile Include="Models\CombinedCustState.cs" />
@@ -354,6 +356,9 @@
     <Content Include="Views\Invoices\ItemDetails.cshtml" />
     <Content Include="Views\Invoices\InvoicesList.cshtml" />
     <Content Include="Views\Invoices\CreateInvoice.cshtml" />
+    <Content Include="Views\Home\AddProduct.cshtml" />
+    <Content Include="Views\Home\CreateProduct.cshtml" />
+    <Content Include="Views\Home\EditProduct.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

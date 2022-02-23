@@ -1,0 +1,30 @@
+﻿@model DBProgramming_Class_2.Models.Product
+@{
+    ViewBag.Title = "AddProduct";
+}
+
+<h2>Add New Product</h2>
+@using (Html.BeginForm("AddProduct", "Home", FormMethod.Post))
+{
+    <label>Product Code: </label>
+    <label>@Html.TextBoxFor(x => x.ProductCode)</label>
+    <label>@Html.ValidationMessageFor(x => x.ProductCode, "", new { @class = "text-danger" })</label>
+    <br />
+
+    <label>Description </label>
+    <label>@Html.TextBoxFor(x => x.Description)</label>
+    <label>@Html.ValidationMessageFor(x => x.Description, "", new { @class = "text-danger" })</label>
+    <br />
+
+    <label>Unit Price: </label>
+    <label>@Html.TextBoxFor(x => x.UnitPrice, new { @type = "number", @min = "0" })</label>
+    <label>@Html.ValidationMessageFor(x => x.UnitPrice, "", new { @class = "text-danger" })</label>
+    <br />
+
+    <label>Product Quantity:</label>
+    <label>@Html.TextBoxFor(x => x.OnHandQuantity, new { @type = "number", @min = "0" })</label>
+    <label>@Html.ValidationMessageFor(x => x.UnitPrice, "", new { @class = "text-danger" })</label>
+    <br />
+
+    <input type="submit" value="Submit" />
+}

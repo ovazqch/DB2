@@ -1,10 +1,7 @@
 ﻿body {
+font-size: medium;
 }
 
 .delete{
 
-}
-
-th {
-    cursor: pointer;
 }

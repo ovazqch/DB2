@@ -5,26 +5,19 @@
 
 @using (Html.BeginForm("EditInvoiceItem", "Invoices", FormMethod.Post))
 {
-    <h2>Edit Invoice Item</h2>
+    <h2>Add / Edit Invoice Item</h2>
 
     @Html.HiddenFor(x => x.ItemTotal)
     @Html.HiddenFor(x => x.InvoiceID)
-    @Html.HiddenFor(x => x.UnitPrice)
 
-    @*<label>Invoice Id</label>
-        <label> @Html.TextBoxFor(x => x.InvoiceID, new { @class = "form-control" }) </label>
-        <br />*@
 
-    <label>Product Code</label>
-    <label> @Html.TextBoxFor(x => x.ProductCode, new { @class = "form-control" }) </label>
+    <label>Product Name: </label>
+    <label>@Html.DropDownListFor(x => x.ProductCode, new SelectList(ViewBag.prodList, "ProductCode", "Description"))</label>
     <br />
 
-    <label>Product Quantity</label>
-    <label> @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control" }) </label>
+    <label>Product Quantity: </label>
+    <label> @Html.DropDownListFor(x => x.Quantity, new SelectList(ViewBag.prodCount, "Value")) </label>
     <br />
 
-    <label>Product Unit Price</label>
-    <label> @Html.TextBoxFor(x => x.UnitPrice, new { @class = "form-control" }) </label>
-    <br />
     <input type="submit" value="Submit" />
 }
